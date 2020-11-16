@@ -1,0 +1,25 @@
+{
+  "resources": [
+    {
+      "pattern": ".*index.html$"
+    },
+    {
+      "pattern": ".*README.md$"
+    },
+    {
+      "pattern": ".*_coverpage.md$"
+    },
+    {
+      "pattern": ".*notes.md$"
+    },
+    {
+      "pattern": ".*user.json$"
+    },
+    {
+      "pattern": ".*index.json$"
+    },
+    {
+      "pattern": ".*logo.jpg$"
+    }
+  ]
+}
