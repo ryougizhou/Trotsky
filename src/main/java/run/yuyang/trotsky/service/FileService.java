@@ -49,14 +49,9 @@ public class FileService {
         for (String fileName : files) {
             File file = new File(path + "/" + fileName);
             if (!file.exists()) {
+                System.out.println("创建✅ " + file.getAbsolutePath());
                 vertx.fileSystem()
-                        .copy("/static/" + fileName, path + "/" + fileName, res -> {
-                            if (res.succeeded()) {
-                                System.out.println("创建✅ " + file.getAbsolutePath());
-                            } else {
-                                System.out.println("创建❌ " + file.getAbsolutePath());
-                            }
-                        });
+                        .copyBlocking("static/" + fileName, path + "/" + fileName);
             } else {
                 System.out.println("已存在✅ " + file.getAbsolutePath());
             }

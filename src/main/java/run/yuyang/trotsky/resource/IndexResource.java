@@ -3,18 +3,13 @@ package run.yuyang.trotsky.resource;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.core.buffer.Buffer;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import run.yuyang.trotsky.service.ConfService;
-import run.yuyang.trotsky.service.FileService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("/")
+@Path("")
 public class IndexResource {
 
     @Inject
@@ -34,7 +29,7 @@ public class IndexResource {
     @Path("/favicon.ico")
     @Produces("image/webp")
     public Buffer favicon() {
-        return vertx.fileSystem().readFileBlocking("/META-INF/resources/img/logo.jpg");
+        return vertx.fileSystem().readFileBlocking("META-INF/resources/img/logo.jpg");
     }
 
     @GET

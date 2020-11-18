@@ -60,12 +60,29 @@ $(function () {
         });
     });
 
-    $(".my-login-validation").submit(function () {
+    $(".my-login-validation").submit(function (event) {
         var form = $(this);
         if (form[0].checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
+            return false;
         }
         form.addClass('was-validated');
+        const data = {};
+        data.email = $("#email").val();
+        data.password = $("#password").val();
+        $.ajax({
+            url: "/admin/login",
+            data: JSON.stringify(data),
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                console.log(data)
+            },
+            error: function () {
+            }
+        })
+        return false;
     });
 });

@@ -45,39 +45,43 @@ public class Trotsky implements QuarkusApplication {
     public int run(String... args) {
         if (args.length == 0) {
             return help();
-        } else if (args.length == 1) {
-            String cmd = args[0];
-            if (cmd.equals("-v") || cmd.equals("--version")) {
+        }
+        String cmd = args[0];
+        switch (cmd) {
+            case "-v":
+            case "--version":
                 return version();
-            } else if (cmd.equals("init")) {
-                try {
-                    initService.init("");
-                } catch (TrotskyException e) {
-                    System.out.println(e.getMessage());
-                    return -1;
+            case "init": {
+                String path = "";
+                if (args.length == 2) {
+                    path = args[1];
+                } else if (args.length > 2) {
+                    return help();
                 }
-            } else {
-                return help();
-            }
-        } else if (args.length == 2) {
-            if (args[0].equals("init")) {
                 try {
-                    initService.init(args[1]);
+                    initService.init(path);
                     return 0;
                 } catch (TrotskyException e) {
                     System.out.println(e.getMessage());
                     return -1;
                 }
-            } else if (args[0].equals("serve")) {
-                confService.readConfFromFile(fileService.getRelPath(args[1]));
+            }
+            case "serve": {
+                String path = "";
+                if (args.length == 2) {
+                    path = args[1];
+                } else if (args.length > 2) {
+                    return help();
+                }
+                confService.readConfFromFile(fileService.getRelPath(path));
                 System.out.println(banner);
                 System.out.println("\n\n    trotsky is listening port : " + port + " \n    the URL is http://127.0.0.1:" + port);
                 Quarkus.waitForExit();
+                return 0;
             }
-        } else {
-            return help();
+            default:
+                return help();
         }
-        return help();
     }
 
 

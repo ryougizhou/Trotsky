@@ -1,9 +1,13 @@
 package run.yuyang.trotsky.service;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import run.yuyang.trotsky.commom.exception.TrotskyException;
+import run.yuyang.trotsky.model.conf.UserConf;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.io.Console;
+import java.util.Scanner;
 
 @ApplicationScoped
 public class InitService {
@@ -11,6 +15,9 @@ public class InitService {
 
     @Inject
     FileService fileService;
+
+    @Inject
+    ConfService confService;
 
     public void init(String path) throws TrotskyException {
         String relPath = fileService.getRelPath(path);
@@ -23,6 +30,26 @@ public class InitService {
         } else {
             throw new TrotskyException("配置文件初始失败。");
         }
+        confService.setWorkerPath(relPath);
+        UserConf userConf = new UserConf();
+        Console console = System.console();
+        userConf.setVersion(confService.getVersion());
+        userConf.setEmail(console.readLine("请输入你的email📮："));
+        String password = "";
+        String check = "";
+        boolean flag = true;
+        while (flag) {
+            password = String.valueOf(console.readPassword("请输入密码️："));
+            check = String.valueOf(console.readPassword("请再次输入密码："));
+            if (password.equals(check)) {
+                flag = false;
+            } else {
+                System.out.println("两次输入密码不同！请再试一次！");
+            }
+        }
+        userConf.setPassword(password);
+        confService.saveUserConf(userConf);
+        System.out.println("☭ 亲爱的达瓦里希，项目创建完成！");
     }
 
 

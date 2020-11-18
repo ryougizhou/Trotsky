@@ -1,24 +1,30 @@
 package run.yuyang.trotsky.service;
 
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
+import lombok.Getter;
+import lombok.Setter;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import run.yuyang.trotsky.model.conf.IndexConf;
 import run.yuyang.trotsky.model.conf.UserConf;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.logging.Logger;
 
 /**
  * @author YuYang
  */
 @ApplicationScoped
+@Setter
+@Getter
 public class ConfService {
-
-    private static final Logger logger = Logger.getLogger("ConfService.class");
 
     @Inject
     Vertx vertx;
+
+    @ConfigProperty(name = "trotsky.version", defaultValue = "unkown")
+    private String version;
 
     private IndexConf indexConf;
 
@@ -26,40 +32,18 @@ public class ConfService {
 
     private String workerPath;
 
-    public ConfService() {
-        indexConf = new IndexConf();
-        userConf = new UserConf();
-    }
+    private String UUID;
 
     public void readConfFromFile(String path) {
         workerPath = path;
-        vertx.fileSystem().readFile(path + "/.trotsky/index.json", res -> {
-            if (res.succeeded()) {
-                JsonObject object = res.result().toJsonObject();
-                indexConf.setVersion(object.getString("version"));
-            }
-        });
-
+        JsonObject object = vertx.fileSystem().readFileBlocking(path + "/.trotsky/index.json").toJsonObject();
+        indexConf = object.mapTo(IndexConf.class);
+        object = vertx.fileSystem().readFileBlocking(path + "/.trotsky/user.json").toJsonObject();
+        userConf = object.mapTo(UserConf.class);
     }
 
-    public IndexConf getIndexConf() {
-        return indexConf;
-    }
-
-    public void setIndexConf(IndexConf indexConf) {
-        this.indexConf = indexConf;
-    }
-
-    public UserConf getUserConf() {
-        return userConf;
-    }
-
-    public void setUserConf(UserConf userConf) {
-        this.userConf = userConf;
-    }
-
-    public String getWorkerPath() {
-        return workerPath;
+    public void saveUserConf(UserConf userConf) {
+        vertx.fileSystem().writeFileBlocking(workerPath + "/.trotsky/user.json", Buffer.buffer(JsonObject.mapFrom(userConf).toString() + "\n"));
     }
 
 }

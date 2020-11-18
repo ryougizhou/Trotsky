@@ -1,27 +1,17 @@
 package run.yuyang.trotsky.model.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author YuYang
  */
+@Getter
+@Setter
 public class LoginParam {
 
     private String email;
 
-    private String pwd;
+    private String password;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
 }

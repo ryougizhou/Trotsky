@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <title>登入-后台管理</title>
-    <link rel="icon" href="img/logo.jpg" sizes="16x16">
-    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <link rel="icon" href="../img/logo.jpg" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
 </head>
 
 <body class="my-login-page">
@@ -15,12 +14,12 @@
         <div class="row justify-content-md-center h-100">
             <div class="card-wrapper">
                 <div class="brand">
-                    <img src="img/logo.jpg" alt="logo">
+                    <img src="../img/logo.jpg" alt="logo">
                 </div>
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Login</h4>
-                        <form method="POST" class="my-login-validation" novalidate="">
+                        <form method="POST" id="login_form" class="my-login-validation" action="/admin/login" novalidate="">
                             <div class="form-group">
                                 <label for="email">E-Mail Address</label>
                                 <input id="email" type="email" class="form-control" name="email" value="" required
@@ -55,9 +54,6 @@
                                     Login
                                 </button>
                             </div>
-                            <div class="mt-4 text-center">
-                                Don't have an account? <a href="register.html">Create One</a>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -69,13 +65,9 @@
     </div>
 </section>
 
-<script src="./js/jquery-3.3.1.slim.min.js"></script>
-<script src="./js/popper.min.js"></script>
-<script src="./js/bootstrap.min.js"></script>
-<script src="./js/login.js"></script>
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/login.js"></script>
 </body>
-
-<script src="./js/vue.js"></script>
-<script src="./js/index.js"></script>
 
 </html>

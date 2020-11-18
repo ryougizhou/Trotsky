@@ -1,17 +1,15 @@
 package run.yuyang.trotsky.model.conf;
 
 
-import javax.enterprise.context.ApplicationScoped;
+import io.quarkus.runtime.annotations.RegisterForReflection;
+import lombok.Data;
+import lombok.ToString;
 
+@Data
+@RegisterForReflection
+@ToString
 public class IndexConf {
 
     private String version;
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
 }
