@@ -1,0 +1,16 @@
+[
+  {
+    "name": "notes",
+    "father": "",
+    "path": "/notes",
+    "show": true,
+    "isDir": true
+  },
+  {
+    "name": "notes.md",
+    "father": "",
+    "path": "/note.md",
+    "show": true,
+    "isDir": false
+  }
+]

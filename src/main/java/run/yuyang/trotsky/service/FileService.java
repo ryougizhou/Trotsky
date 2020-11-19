@@ -1,10 +1,11 @@
 package run.yuyang.trotsky.service;
 
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.io.*;
+import java.io.File;
 
 @ApplicationScoped
 public class FileService {
@@ -31,7 +32,7 @@ public class FileService {
 
     public boolean copyStaticFile(String path) {
         String[] files = new String[]{
-                "index.html", "README.md", "_coverpage.md", "notes.md", ".trotsky/user.json", ".trotsky/index.json", "img/logo.jpg"
+                "index.html", "README.md", "_coverpage.md", "notes.md", ".trotsky/user.json", ".trotsky/index.json", ".trotsky/note.json", "img/logo.jpg"
         };
         String[] dirs = new String[]{
                 "img", ".trotsky", "notes"
@@ -58,6 +59,19 @@ public class FileService {
 
         }
         return true;
+    }
+
+    public void saveNewFile(String path, String text) {
+        vertx.fileSystem().createFile(path, res -> {
+            if (res.succeeded()){
+                vertx.fileSystem().writeFile(path, Buffer.buffer(text), respose -> {
+                    if (respose.succeeded()){
+                    }
+                });
+            }else {
+                System.out.println(res.cause());
+            }
+        });
     }
 
 }
