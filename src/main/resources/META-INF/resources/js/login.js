@@ -60,12 +60,11 @@ $(function () {
         });
     });
 
-    $(".my-login-validation").submit(function (event) {
-        var form = $(this);
+    $("#button_login").click(function (event) {
+        var form = $(".my-login-validation");
         if (form[0].checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-            return false;
+            form.addClass('was-validated');
+            return;
         }
         form.addClass('was-validated');
         const data = {};
@@ -78,11 +77,12 @@ $(function () {
             contentType: "application/json",
             dataType: "json",
             success: function (data) {
-                console.log(data)
+                window.location.href = "/admin/home.html";
             },
             error: function () {
+                //TODO 登入失败需要提示用户
+                console.log("登入失败")
             }
         })
-        return false;
     });
 });

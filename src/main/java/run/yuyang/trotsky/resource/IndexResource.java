@@ -33,7 +33,7 @@ public class IndexResource {
     }
 
     @GET
-    @Path("/{md}")
+    @Path("/{md:.*md$}")
     @Produces("text/markdown")
     public Uni<String> getMd(@PathParam("md") String md) {
         return vertx.fileSystem().readFile(confService.getWorkerPath() + "/" + md)

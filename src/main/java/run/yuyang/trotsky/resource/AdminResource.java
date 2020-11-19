@@ -45,7 +45,7 @@ public class AdminResource {
             String uuid = UUID.randomUUID().toString();
             NewCookie cookie = new NewCookie("uuid", uuid);
             confService.setUUID(uuid);
-            return Response.ok().cookie(cookie).build();
+            return Response.ok("{\"msg\":\"success\"}").cookie(cookie).build();
         } else {
             return Response.serverError().build();
         }
